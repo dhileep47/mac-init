@@ -12,8 +12,8 @@
 #   sets up SSH HOST ALIASES. You clone using a fake hostname instead of
 #   github.com, and SSH silently uses the right key based on that alias:
 #
-#     git clone git@github-personal:yourname/repo.git   -> uses personal key
-#     git clone git@github-org:yourorg/repo.git          -> uses org key
+#     git clone git@github.com-personal:yourname/repo.git   -> uses personal key
+#     git clone git@github.com-org:yourorg/repo.git          -> uses org key
 #
 #   Both aliases route over port 443 (bypasses networks that block port 22).
 
@@ -68,11 +68,11 @@ ssh-add --apple-use-keychain "$PERSONAL_KEY" 2>/dev/null || ssh-add "$PERSONAL_K
 ssh-add --apple-use-keychain "$ORG_KEY" 2>/dev/null || ssh-add "$ORG_KEY"
 
 # ---------- 4. SSH config with two host aliases (both over port 443) ----------
-if ! grep -q "Host github-personal" "$SSH_CONFIG" 2>/dev/null; then
-  info "Adding github-personal alias to SSH config..."
+if ! grep -q "Host github.com-personal" "$SSH_CONFIG" 2>/dev/null; then
+  info "Adding github.com-personal alias to SSH config..."
   cat >> "$SSH_CONFIG" << EOF
 
-Host github-personal
+Host github.com-personal
   Hostname ssh.github.com
   Port 443
   User git
@@ -82,14 +82,14 @@ Host github-personal
   AddKeysToAgent yes
 EOF
 else
-  ok "github-personal alias already configured"
+  ok "github.com-personal alias already configured"
 fi
 
-if ! grep -q "Host github-org" "$SSH_CONFIG" 2>/dev/null; then
-  info "Adding github-org alias to SSH config..."
+if ! grep -q "Host github.com-org" "$SSH_CONFIG" 2>/dev/null; then
+  info "Adding github.com-org alias to SSH config..."
   cat >> "$SSH_CONFIG" << EOF
 
-Host github-org
+Host github.com-org
   Hostname ssh.github.com
   Port 443
   User git
@@ -99,7 +99,7 @@ Host github-org
   AddKeysToAgent yes
 EOF
 else
-  ok "github-org alias already configured"
+  ok "github.com-org alias already configured"
 fi
 
 chmod 600 "$SSH_CONFIG"
@@ -157,8 +157,8 @@ echo ""
 echo "Add each key at: https://github.com/settings/keys (on the correct account)"
 echo ""
 echo "USAGE — how to clone with the right identity:"
-echo "  Personal repo: git clone git@github-personal:username/repo.git"
-echo "  Org repo:       git clone git@github-org:orgname/repo.git"
+echo "  Personal repo: git clone git@github.com-personal:username/repo.git"
+echo "  Org repo:       git clone git@github.com-org:orgname/repo.git"
 echo ""
 echo "Any repo cloned into $WORK_DIR/ automatically uses your org git name/email."
 echo "Everything else uses your personal (global) git name/email."

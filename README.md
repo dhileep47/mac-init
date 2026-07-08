@@ -87,7 +87,7 @@ For when your personal `git blame` history shouldn't show up in your company's r
 | Config | What & Why |
 |--------|------------|
 | **Two SSH keys** | Generates `id_ed25519_personal` and `id_ed25519_org` — because one key for two accounts is identity fraud |
-| **SSH host aliases** | Creates `github-personal` and `github-org` aliases. You clone with the fake hostname, SSH figures out the rest |
+| **SSH host aliases** | Creates `github.com-personal` and `github.com-org` aliases. You clone with the fake hostname, SSH figures out the rest |
 | **Both over port 443** | Same firewall-dodging trick, now for both identities |
 | **Directory-based git identity** | Any repo under `~/work/` automatically uses your org name/email. Everything else uses your personal identity. No more "oops wrong email" commits |
 | **Conditional `.gitconfig`** | Creates `~/.gitconfig-org` and wires it up with `includeIf` — git's built-in "if you're in this folder, be this person" feature that nobody knows about |
@@ -96,11 +96,11 @@ For when your personal `git blame` history shouldn't show up in your company's r
 
 ```bash
 # Personal repos — business as usual, but with the alias
-git clone git@github-personal:yourname/repo.git
+git clone git@github.com-personal:yourname/repo.git
 
 # Org repos — clone into ~/work/ and git identity switches automatically
 cd ~/work
-git clone git@github-org:yourorg/repo.git
+git clone git@github.com-org:yourorg/repo.git
 ```
 
 > [!NOTE]
